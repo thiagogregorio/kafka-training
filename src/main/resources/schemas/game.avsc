@@ -1,0 +1,23 @@
+{
+  "namespace": "com.thoughtworks.schemas",
+  "type": "record",
+  "name": "Game",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "category",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": "double"
+    }
+  ]
+}

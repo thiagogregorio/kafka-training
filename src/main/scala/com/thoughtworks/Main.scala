@@ -1,7 +1,7 @@
 package com.thoughtworks
 
-import com.thoughtworks.consumers.{AvroConsumer, OrdersConsumer}
-import com.thoughtworks.producers.{AvroProducer, OrdersProducer}
+import com.thoughtworks.consumers.{GameAvroConsumer, OrdersConsumer}
+import com.thoughtworks.producers.{GameAvroProducer, OrdersProducer}
 import com.thoughtworks.streams.OrdersProcessor
 
 object Main {
@@ -12,11 +12,11 @@ object Main {
       recordCount = Integer.parseInt(args(1))
     }
 
-    val topic = "orders"
-    val avroTopic = "orders-avro"
+    val topic = "games-gregorio"
+    val avroTopic = "games-avro-gregorio"
     val brokers =
       "a41eb0771ed9211e8aa15029578fb917-1813474711.us-east-1.elb.amazonaws.com:9092, " +
-        "a42059552ed9211e8aa15029578fb917-1584479926.us-east-1.elb.amazonaws.com:9092" +
+        "a42059552ed9211e8aa15029578fb917-1584479926.us-east-1.elb.amazonaws.com:9092, " +
         "a421f0772ed9211e8aa15029578fb917-1025101154.us-east-1.elb.amazonaws.com:9092"
 
     if (mode == "producer" || mode == "p") {
@@ -28,9 +28,9 @@ object Main {
     } else if (mode == "streams" || mode == "s") {
       OrdersProcessor.processOrders(topic, brokers)
     } else if (mode == "avro-producer" || mode == "ap") {
-      (1 to recordCount).foreach(_ => AvroProducer.generateSale(avroTopic, brokers))
+      (1 to recordCount).foreach(_ => GameAvroProducer.generateGame(avroTopic, brokers))
     } else if (mode == "avro-consumer" || mode == "ac") {
-      AvroConsumer.consumeSales(avroTopic, brokers)
+      GameAvroConsumer.consumeGames(avroTopic, brokers)
     }
 
     println("Application exited.")
